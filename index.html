@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="dark" id="theme-html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>90 Days Hero - Ultimate Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+
+<body class="bg-base-300 min-h-screen flex flex-col text-base-content select-none font-sans">
+
+    <header class="navbar bg-base-100 border-b border-neutral/50 px-4 md:px-8 shadow-md sticky top-0 z-50">
+        <div class="flex-1">
+            <a class="text-xl font-black tracking-widest text-primary flex items-center gap-2">
+                <span><svg class="w-6 h-6 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3.5z"></path>
+                    </svg></span> 90 DAYS HERO
+            </a>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="tooltip tooltip-bottom font-bold" data-tip="ライト・ダークモード切り替え">
+                <label class="swap swap-rotate btn btn-ghost btn-circle btn-sm">
+                    <input type="checkbox" id="theme-toggle" />
+
+                    <svg class="swap-on w-5 h-5 text-warning" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+
+                    <svg class="swap-off w-5 h-5 text-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </label>
+            </div>
+
+            <div class="hidden sm:block">
+                <span class="badge badge-outline badge-warning font-bold text-xs tracking-wider px-3 py-2">
+                    STAY DISCIPLINED
+                </span>
+            </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl w-full mx-auto p-4 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="md:col-span-2 space-y-6">
+
+            <div class="card bg-base-100 shadow-xl border border-neutral/50">
+                <div class="card-body items-center text-center p-6">
+                    <h1 class="card-title text-3xl font-black tracking-wider text-primary mb-1">90 DAYS HERO</h1>
+                    <div id="rank-badge" class="badge badge-accent badge-lg font-bold gap-2 mb-4 shadow-md">読み込み中...</div>
+
+                    <div class="grid grid-cols-4 gap-2 text-center auto-cols-max mb-4">
+                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content min-w-[65px]">
+                            <span id="days" class="font-mono text-3xl font-bold justify-center">00</span>
+                            <span class="text-xs font-semibold opacity-70">日</span>
+                        </div>
+                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content min-w-[65px]">
+                            <span id="hours" class="font-mono text-3xl font-bold justify-center">00</span>
+                            <span class="text-xs font-semibold opacity-70">時</span>
+                        </div>
+                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content min-w-[65px]">
+                            <span id="minutes" class="font-mono text-3xl font-bold justify-center">00</span>
+                            <span class="text-xs font-semibold opacity-70">分</span>
+                        </div>
+                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content min-w-[65px]">
+                            <span id="seconds" class="font-mono text-3xl font-bold justify-center">00</span>
+                            <span class="text-xs font-semibold opacity-70">秒</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full">
+                        <div class="flex justify-between text-xs font-bold mb-1 opacity-80">
+                            <span id="progress-percent">進捗: 0%</span>
+                            <span>目標: 90日</span>
+                        </div>
+                        <progress id="progress-bar" class="progress progress-primary w-full h-3 shadow-inner" value="0" max="100"></progress>
+                    </div>
+
+                    <div class="bg-base-200 p-3 rounded-xl w-full text-xs font-medium border border-base-300 min-h-[3.5rem] flex items-center justify-center mt-4">
+                        <p id="motivate-message" class="italic opacity-90"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-base-100 shadow-xl border border-neutral/50">
+                <div class="card-body p-6">
+                    <div class="flex flex-wrap justify-between items-center gap-2 mb-2">
+                        <h2 class="card-title text-xl font-bold text-secondary">タスク管理</h2>
+                        <div id="selected-date-badge" class="badge badge-info font-bold p-3 gap-1 shadow">
+                            選択日: 読み込み中...
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 mb-4">
+                        <input type="text" id="task-input" placeholder="例: 筋トレをする、瞑想をする..." class="input input-bordered input-md flex-grow" />
+                        <button id="btn-add-task" class="btn btn-secondary btn-md font-bold">追加</button>
+                    </div>
+
+                    <div id="task-list" class="space-y-2 max-h-60 overflow-y-auto">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="md:col-span-1">
+            <div class="card bg-base-100 shadow-xl border border-neutral/50 h-full">
+                <div class="card-body p-6 flex flex-col h-full">
+
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 id="view-title" class="card-title text-xl font-bold text-accent">履歴カレンダー</h2>
+                        <div class="join">
+                            <button id="btn-view-cal" class="btn btn-xs join-item btn-active">月間</button>
+                            <button id="btn-view-list" class="btn btn-xs join-item">リスト</button>
+                        </div>
+                    </div>
+
+                    <div id="calendar-view" class="block w-full">
+                        <div class="text-center font-bold text-sm mb-2 opacity-80" id="calendar-month-year"></div>
+                        <div class="grid grid-cols-7 gap-1 text-center text-xs font-bold mb-1 opacity-60">
+                            <div class="text-error">日</div>
+                            <div>月</div>
+                            <div>火</div>
+                            <div>水</div>
+                            <div>木</div>
+                            <div>金</div>
+                            <div class="text-info">土</div>
+                        </div>
+                        <div id="calendar-grid" class="grid grid-cols-7 gap-1 text-center text-sm font-semibold">
+                        </div>
+                        <p class="text-[10px] opacity-50 text-center mt-3">※今日または過去の日付をクリックすると、その日のタスクを編集できます。</p>
+                    </div>
+
+                    <div id="timeline-view" class="hidden w-full flex-grow overflow-y-auto max-h-[350px] pr-2">
+                        <ul id="timeline-list" class="timeline timeline-vertical timeline-compact">
+                        </ul>
+                    </div>
+
+                    <div class="mt-auto pt-6 text-center border-t border-neutral/30">
+                        <button id="btn-reset" class="btn btn-outline btn-error btn-xs font-bold">
+                            カウンターリセット
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <footer class="footer footer-center p-6 bg-base-100 text-base-content border-t border-neutral/50 mt-auto">
+        <aside>
+            <p id="random-quote" class="italic font-bold text-center text-xs opacity-80 tracking-wide">「読み込み中...」</p>
+            <p class="text-[10px] opacity-50 mt-1">Copyright © 2026 - 90 DAYS HERO All rights reserved.</p>
+        </aside>
+    </footer>
+
+    <script>
+        const TARGET_DAYS = 90;
+        const TARGET_MS = TARGET_DAYS * 24 * 60 * 60 * 1000;
+
+        const RANKS = [
+            { day: 0, title: "足軽 (Lv.1)", msg: "最初の一歩を踏み出しました。ここからすべてが始まります。" },
+            { day: 3, title: "足軽大将 (Lv.2)", msg: "最初の壁である3日を突破！脳のクリーニングが始まっています。" },
+            { day: 7, title: "侍 (Lv.3)", msg: "1週間達成！テストステロンが満ち、集中力が高まり始めています。" },
+            { day: 14, title: "旗本 (Lv.4)", msg: "2週間突破。習慣が変わり始め、目つきに力が戻ってきます。" },
+            { day: 30, title: "家老 (Lv.5)", msg: "1ヶ月達成！あなたはもう常人ではありません。自信を持ちましょう。" },
+            { day: 60, title: "大名 (Lv.6)", msg: "2ヶ月突破。強力な自制心が宿りました。ゴールは目の前です。" },
+            { day: 90, title: "将軍 (Lv.MAX)", msg: "90日達成！あなたは己の欲望を完全に支配した本物の覇者です。" }
+        ];
+
+        const MOTIVATION_QUOTES = [
+            "「偉大な成果は、日々の小さな選択の積み重ねである。」",
+            "「最も強い人間とは、己の欲望に打ち勝つ者だ。」",
+            "「1秒前の自分を超えろ。未来の自分が今のあなたに感謝する。」",
+            "「エネルギーを無駄にするな。それをすべて己の成長へ変えよ。」",
+            "「一瞬の快楽のために、一生の誇りを捨てるな。」",
+            "「戦うべき相手は他人ではない、怠惰になろうとする己の心だ。」",
+            "「苦しい時こそ、脳が新しく生まれ変わっているサインである。」"
+        ];
+
+        const FLAME_SVG_TEMPLATE = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3.5z"></path>
+            </svg>
+        `;
+
+        let startTime = localStorage.getItem('nofap_start_time') || Date.now();
+        localStorage.setItem('nofap_start_time', startTime);
+
+        let myTasks = JSON.parse(localStorage.getItem('nofap_tasks')) || ["筋トレをする", "瞑想をする", "冷水シャワーを浴びる"];
+        let checkedHistory = JSON.parse(localStorage.getItem('nofap_checked_history')) || {};
+
+        let selectedDateStr = getTodayString();
+
+        const elDays = document.getElementById('days');
+        const elHours = document.getElementById('hours');
+        const elMinutes = document.getElementById('minutes');
+        const elSeconds = document.getElementById('seconds');
+        const elProgressBar = document.getElementById('progress-bar');
+        const elProgressPercent = document.getElementById('progress-percent');
+        const elRankBadge = document.getElementById('rank-badge');
+        const elMessage = document.getElementById('motivate-message');
+        const elQuote = document.getElementById('random-quote');
+        const taskInput = document.getElementById('task-input');
+        const btnAddTask = document.getElementById('btn-add-task');
+        const taskList = document.getElementById('task-list');
+        const elSelectedDateBadge = document.getElementById('selected-date-badge');
+
+        const btnViewCal = document.getElementById('btn-view-cal');
+        const btnViewList = document.getElementById('btn-view-list');
+        const calendarView = document.getElementById('calendar-view');
+        const timelineView = document.getElementById('timeline-view');
+        const viewTitle = document.getElementById('view-title');
+        const calendarGrid = document.getElementById('calendar-grid');
+        const calendarMonthYear = document.getElementById('calendar-month-year');
+        const timelineList = document.getElementById('timeline-list');
+        const btnReset = document.getElementById('btn-reset');
+        const elHtml = document.getElementById('theme-html');
+        const themeToggle = document.getElementById('theme-toggle');
+
+        function getTodayString() {
+            const d = new Date();
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('nofap_theme') || 'dark';
+            elHtml.setAttribute('data-theme', savedTheme);
+            themeToggle.checked = (savedTheme === 'light');
+        }
+
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                elHtml.setAttribute('data-theme', 'light');
+                localStorage.setItem('nofap_theme', 'light');
+            } else {
+                elHtml.setAttribute('data-theme', 'dark');
+                localStorage.setItem('nofap_theme', 'dark');
+            }
+        });
+
+        function displayRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * MOTIVATION_QUOTES.length);
+            elQuote.innerText = MOTIVATION_QUOTES[randomIndex];
+        }
+
+        function updateCounter() {
+            const now = Date.now();
+            const diff = now - startTime;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            elDays.innerText = String(days).padStart(2, '0');
+            elHours.innerText = String(hours).padStart(2, '0');
+            elMinutes.innerText = String(minutes).padStart(2, '0');
+            elSeconds.innerText = String(seconds).padStart(2, '0');
+
+            const progressPercent = Math.min((diff / TARGET_MS) * 100, 100).toFixed(1);
+            elProgressBar.value = progressPercent;
+            elProgressPercent.innerText = `進捗: ${progressPercent}%`;
+
+            let currentRank = RANKS[0];
+            for (let i = RANKS.length - 1; i >= 0; i--) {
+                if (days >= RANKS[i].day) { currentRank = RANKS[i]; break; }
+            }
+            elRankBadge.innerText = currentRank.title;
+            elMessage.innerText = currentRank.msg;
+        }
+
+        function renderTasks() {
+            taskList.innerHTML = '';
+
+            const todayStr = getTodayString();
+            elSelectedDateBadge.innerText = `編集日: ${selectedDateStr}${selectedDateStr === todayStr ? ' (今日)' : ''}`;
+            if (selectedDateStr === todayStr) {
+                elSelectedDateBadge.className = "badge badge-info font-bold p-3 gap-1 shadow";
+            } else {
+                elSelectedDateBadge.className = "badge badge-warning font-bold p-3 gap-1 shadow";
+            }
+
+            const targetDayHistory = checkedHistory[selectedDateStr] || [];
+
+            myTasks.forEach((task, index) => {
+                const isChecked = targetDayHistory.includes(task);
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between bg-base-200 p-2 rounded-lg border border-base-300";
+                item.innerHTML = `
+                    <div class="flex items-center gap-3 flex-grow">
+                        <button class="btn btn-sm ${isChecked ? 'btn-success' : 'btn-outline btn-neutral'} font-bold btn-check" data-index="${index}">
+                            ${isChecked ? '✓ クリア' : 'チェックイン'}
+                        </button>
+                        <span class="text-sm font-semibold ${isChecked ? 'line-through opacity-50' : ''}">${task}</span>
+                    </div>
+                    <button class="btn btn-ghost btn-xs text-error btn-delete font-bold" data-index="${index}">削除</button>
+                `;
+                taskList.appendChild(item);
+            });
+
+            document.querySelectorAll('.btn-check').forEach(btn => {
+                btn.addEventListener('click', (e) => toggleCheck(e.target.dataset.index));
+            });
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => deleteTask(e.target.dataset.index));
+            });
+        }
+
+        btnAddTask.addEventListener('click', () => {
+            const text = taskInput.value.trim();
+            if (text) {
+                myTasks.push(text);
+                localStorage.setItem('nofap_tasks', JSON.stringify(myTasks));
+                taskInput.value = '';
+                renderTasks();
+            }
+        });
+
+        function deleteTask(index) {
+            myTasks.splice(index, 1);
+            localStorage.setItem('nofap_tasks', JSON.stringify(myTasks));
+            renderTasks();
+        }
+
+        function toggleCheck(index) {
+            const taskName = myTasks[index];
+            if (!checkedHistory[selectedDateStr]) checkedHistory[selectedDateStr] = [];
+
+            const tIndex = checkedHistory[selectedDateStr].indexOf(taskName);
+            if (tIndex > -1) {
+                checkedHistory[selectedDateStr].splice(tIndex, 1);
+                if (checkedHistory[selectedDateStr].length === 0) delete checkedHistory[selectedDateStr];
+            } else {
+                checkedHistory[selectedDateStr].push(taskName);
+            }
+
+            localStorage.setItem('nofap_checked_history', JSON.stringify(checkedHistory));
+            renderTasks();
+            renderCalendar();
+            renderTimeline();
+        }
+
+        function renderCalendar() {
+            calendarGrid.innerHTML = '';
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // 時間を丸めた今日のDateオブジェクト
+
+            calendarMonthYear.innerText = `${year}年 ${month + 1}月`;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const lastDate = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                const empty = document.createElement('div');
+                calendarGrid.appendChild(empty);
+            }
+
+            for (let date = 1; date <= lastDate; date++) {
+                const currentDateObj = new Date(year, month, date);
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+                const hasDone = checkedHistory[dateStr] && checkedHistory[dateStr].length > 0;
+                const isSelected = (dateStr === selectedDateStr);
+
+                // 【変更箇所】判定：この日付のセルが「今日より未来」かどうか
+                const isFuture = currentDateObj > today;
+
+                const dayCell = document.createElement('div');
+
+                // 【UI変更】未来の日付の場合は `opacity-40 pointer-events-none cursor-not-allowed` を付与
+                if (isFuture) {
+                    dayCell.className = `p-1 rounded-md min-h-[44px] flex flex-col items-center justify-between border border-neutral/5 opacity-40 cursor-not-allowed bg-base-300`;
+                } else {
+                    dayCell.className = `p-1 rounded-md min-h-[44px] flex flex-col items-center justify-between border cursor-pointer transition-all duration-150 active:scale-95 hover:bg-neutral/20 
+                        ${isSelected ? 'border-2 border-info bg-base-100 shadow-md scale-105 z-10' : 'border-neutral/10 bg-base-200'} 
+                        ${hasDone ? 'bg-success/10 text-success font-bold' : ''}`;
+
+                    // クリックイベント用に属性を保持させるのは過去・今日のみ
+                    dayCell.setAttribute('data-date', dateStr);
+                }
+
+                let microFlame = FLAME_SVG_TEMPLATE.replace('<svg', '<svg class="w-4 h-4 mx-auto text-orange-500"');
+
+                dayCell.innerHTML = `
+                    <span class="text-xs ${isSelected ? 'text-info font-black' : 'opacity-80'}">${date}</span>
+                    <span class="text-xs h-4 flex items-center">${hasDone ? microFlame : ''}</span>
+                `;
+                calendarGrid.appendChild(dayCell);
+            }
+
+            // イベントリスナーを設定（data-date属性を持つ「今日・過去」のセルだけを対象にする）
+            document.querySelectorAll('#calendar-grid [data-date]').forEach(cell => {
+                cell.addEventListener('click', (e) => {
+                    selectedDateStr = e.currentTarget.getAttribute('data-date');
+                    renderCalendar();
+                    renderTasks();
+                });
+            });
+        }
+
+        function renderTimeline() {
+            timelineList.innerHTML = '';
+            const sortedDates = Object.keys(checkedHistory).sort((a, b) => new Date(b) - new Date(a));
+
+            if (sortedDates.length === 0) {
+                timelineList.innerHTML = '<p class="text-xs opacity-50 text-center mt-4">履歴がまだありません</p>';
+                return;
+            }
+
+            sortedDates.forEach((dateStr) => {
+                const tasks = checkedHistory[dateStr];
+                const item = document.createElement('li');
+
+                let timelineFlame = FLAME_SVG_TEMPLATE.replace('<svg', '<svg class="w-4 h-4 mr-1 inline-block align-text-bottom text-orange-500"');
+
+                item.innerHTML = `
+                    <hr class="bg-neutral"/>
+                    <div class="timeline-start font-mono text-xs opacity-70">${dateStr}</div>
+                    <div class="timeline-middle">
+                        <div class="badge badge-success badge-xs"></div>
+                    </div>
+                    <div class="timeline-end timeline-box p-2 bg-neutral text-neutral-content text-xs max-w-full">
+                        <div class="font-bold mb-1">${timelineFlame} 達成項目:</div>
+                        <ul class="list-disc list-inside opacity-80">
+                            ${tasks.map(t => `<li>${t}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <hr class="bg-neutral"/>
+                `;
+                timelineList.appendChild(item);
+            });
+        }
+
+        btnViewCal.addEventListener('click', () => {
+            btnViewCal.classList.add('btn-active');
+            btnViewList.classList.remove('btn-active');
+            calendarView.classList.remove('hidden');
+            timelineView.classList.add('hidden');
+            viewTitle.innerText = "履歴カレンダー";
+        });
+
+        btnViewList.addEventListener('click', () => {
+            btnViewList.classList.add('btn-active');
+            btnViewCal.classList.remove('btn-active');
+            timelineView.classList.remove('hidden');
+            calendarView.classList.add('hidden');
+            viewTitle.innerText = "達成タイムライン";
+        });
+
+        btnReset.addEventListener('click', () => {
+            if (confirm('警告: 90日カウンターをリセットしますか？（※設定した目的やこれまでのカレンダー履歴は保持されます）')) {
+                startTime = Date.now();
+                localStorage.setItem('nofap_start_time', startTime);
+                updateCounter();
+            }
+        });
+
+        initTheme();
+        setInterval(updateCounter, 1000);
+        updateCounter();
+        renderTasks();
+        renderCalendar();
+        renderTimeline();
+        displayRandomQuote();
+    </script>
+</body>
+
+</html>
